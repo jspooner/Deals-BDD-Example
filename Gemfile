@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
-gem 'rails', '3.1.0.rc6'
+gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => "3-1-stable"
 gem 'sqlite3'
+# gem 'mysql2'
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0.rc"
+  # gem 'sass-rails', "  ~> 3.1.0.rc"
   gem 'coffee-rails', "~> 3.1.0.rc"
   gem 'uglifier'
 end
