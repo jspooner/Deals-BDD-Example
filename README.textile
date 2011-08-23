@@ -1,7 +1,9 @@
+p. Project was generated from rails3-devise-rspec-cucumber-template with some modifications to get by a couple of errors caused by edge rails.
+rails new deals -m https://raw.github.com/RailsApps/rails3-application-templates/master/rails3-devise-rspec-cucumber-template.rb -T
+
 
 h1. Create Project
-* rails new deals -m https://raw.github.com/RailsApps/rails3-application-templates/master/rails3-devise-rspec-cucumber-template.rb -T
-* or check out tag v0.2.1
+	* or check out tag v0.2.1
 
 h3. rake cucumber:wip
 	2 scenarios (2 failed)
@@ -20,7 +22,35 @@ h3. Implement Step Definitions
 	  pending # express the regexp above with the code you wish you had
 	end
 
+h3. rake cucumber:wip
 
+	p. Ok let's make this pass
+
+	      Can't find mapping from "the new deal page" to a path.
+	      Now, go and add a mapping in /Users/jonathanspooner/Dropbox/active/bdd/deals/features/support/paths.rb (RuntimeError)
+
+	p. We don't need to add anything to paths.rb because we can just use the catch all path.
+
+	begin
+	  page_name =~ /the (.*) page/
+	  ...
+	rescue Object => e
+	  raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
+	    "Now, go and add a mapping in #{__FILE__}"
+	end
+				 
+h3. add route for deals
+
+	routes.rb
+	resources :deals
+
+h3. rake cucumber:wip
+
+	Scenario: Create a new deal                                                         # features/deals/create_deals.feature:12
+	    Given I am on the new deal page                                                   # features/step_definitions/web_steps.rb:44
+	      uninitialized constant DealsController (ActionController::RoutingError)
+	      ./features/step_definitions/web_steps.rb:45:in `/^(?:|I )am on (.+)$/'
+	      features/deals/create_deals.feature:13:in `Given I am on the new deal page'
 
 
 
