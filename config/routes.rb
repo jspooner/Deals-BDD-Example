@@ -1,4 +1,6 @@
 Deals::Application.routes.draw do
+  resources :deals
+
   #get \"users\/show\"
 
   root :to => "home#index"
