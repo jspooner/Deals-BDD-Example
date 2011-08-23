@@ -10,6 +10,6 @@ current.to_i.times do
   end
 end
 
-Then /^I should see (\d+) deals$/ do |arg1|
-  page.should have_selector("div.deal", :count => arg1)
+Then /^I should see (\d+) links to deals$/ do |arg1|
+  page.should have_selector("div.deal a[href^='/deals/']", :count => arg1)
 end

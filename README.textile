@@ -327,11 +327,40 @@ h4. rake spec:controllers
 Finished in 0.42225 seconds
 20 examples, 0 failures
 
+h4. Let's add some html
+
+<% @deals.each do |deal| %>
+ <div class="deal">
+ 	<%= deal.title %>
+ </div>
+<% end %>
+
+and pop back up to cucumber
 
 
+h3. rake cucumber:wip
+
+Looks Green!  Almost!
+
+h3. The customer actually wants the deals to be linked to the deal page.
+
+Let's update the step_definition to look for links to /deals/
+
+Then /^I should see (\d+) links to deals$/ do |arg1|
+  page.should have_selector("div.deal a[href^='/deals/']", :count => arg1)
+end
+
+h3. rake cucumber:wip
+
+Then I should see 4 links to deals                  # features/step_definitions/home_steps.rb:13
+      expected css "div.deal a[href^='/deals/']" to return something (RSpec::Expectations::ExpectationNotMetError)
 
 
+h3. Let's add the links
 
+h3. rake cucumber:wip
+
+Looks Green!
 
 
 
