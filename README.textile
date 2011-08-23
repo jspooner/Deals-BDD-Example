@@ -1,13 +1,41 @@
 
 h1. Create Project
 * rails new deals -m https://raw.github.com/RailsApps/rails3-application-templates/master/rails3-devise-rspec-cucumber-template.rb -T
-* git init .
-* git add *
-* git commit -a -m "init deals"
-* cd deals
-* mate .
-* rake spec
-* rake cucumber
+* or check out tag v0.2.1
+
+h3. rake cucumber:wip
+	2 scenarios (2 failed)
+	15 steps (2 failed, 8 skipped, 1 undefined, 4 passed)
+	0m1.388s
+
+	You can implement step definitions for undefined steps with these snippets:
+
+	Then /^the deal should be saved$/ do
+	  pending # express the regexp above with the code you wish you had
+	end
+
+h3. Implement Step Definitions
+	/features/step_definitions/deal_steps.rb
+	Then /^the deal should be saved$/ do
+	  pending # express the regexp above with the code you wish you had
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * be rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text
 * rake db:migrate
 * RAILS_ENV=test rake db:migrate
