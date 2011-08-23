@@ -155,15 +155,47 @@ Scenario: Create a new deal
     Then I should see "Mega skateboard deals"                                  
                                                                                
 
-
+h3. Now let's move our @wip tag down and fix this "title can't be blank error" 
 
 Then I should see "Title can't be blank" 
 
+Looks like this should be valid so let's drop down a gear and update the Deal model.
+
+h4. DealSpec
+
+describe "validation" do
+  it { Deal.new.should have(1).errors_on(:title) }    
+end
+
+h4. rake spec:models
+
+Deal validation 
+     Failure/Error: it { Deal.new.should have(1).errors_on(:title) }
+       expected 1 errors on :title, got 0
+     # ./spec/models/deal_spec.rb:9:in `block (3 levels) in <top (required)>'
+
+h4. Deal.rb
+
+  validates_presence_of :title
+
+h4. rake spec:models
+
+Finished in 1.73 seconds
+16 examples, 0 failures
+
+Looking Green!  Let's go back up to Cucumber.
+
+h3. rake cucumber:wip
+
+The --wip switch was used, so I didn't expect anything to pass. These scenarios passed:
+(::) passed scenarios (::)
+
+Let's remove that @wip tag from the .feature file
 
 
+h3. rake cucumber
 
-
-
+Looks good.  Time to commit and move on to the home_page.feature
 
 
 

@@ -18,7 +18,6 @@ Feature: Create Deals
 		Then the deal should be saved
 		Then I should see "Mega skateboard deals"
 	
-	@wip
 	Scenario: Validate the new deal
 		Given I am on the new deal page
 		And I press "Create Deal"
