@@ -10,6 +10,6 @@ Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, cu
   end
 end
 
-Then /^I should see (\d+) deals$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then /^I should see (\d+) deals$/ do |number_of_photos|
+  page.should have_selector("img.photo", :count => number_of_photos)
 end
