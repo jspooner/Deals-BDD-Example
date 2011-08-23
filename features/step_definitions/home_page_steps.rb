@@ -11,5 +11,5 @@ Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, cu
 end
 
 Then /^I should see (\d+) deals$/ do |number_of_photos|
-  page.should have_selector("img.photo", :count => number_of_photos)
+  page.should have_selector("div.deal", :count => number_of_photos)
 end
