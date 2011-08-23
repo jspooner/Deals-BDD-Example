@@ -241,6 +241,88 @@ Let's drop down a gear and update the model.
 
 h4. deal_spec.rb
 
+Add named scope for current deals.
+
+describe "queries" do
+  before(:each) do
+    @past    = Factory(:deal, { :start_date => 30.days.ago, :end_date => 29.days.ago })
+    @current = Factory(:deal, { :start_date => 5.days.ago, :end_date => 5.days.from_now })
+    @future  = Factory(:deal, { :start_date => 5.days.from_now, :end_date => 10.days.from_now })
+  end
+  it "should find current deals" do
+    deals = Deal.current
+    deals.should have(1).item
+    deals.first.should eql(@current)
+  end
+end
+
+
+h4. rake spec:models
+
+Failure/Error: deals = Deal.current
+     NoMethodError:
+       undefined method `current' for #<Class:0x007fbade4e2ac8>
+
+Let's add this to Deal.rb 
+scope :current
+
+h4. rake spec:models
+
+Deal queries should find current deals
+     Failure/Error: deals.should have(1).item
+       expected 1 item, got 3
+
+Ok now we need to get the query right.
+
+  scope :current, where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)
+
+h4. rake spec:models
+
+Finished in 0.1878 seconds
+17 examples, 0 failures
+
+h4. REFRACTOR!
+
+We need a lambda around the query so the date isn't cashed.
+scope :current, lambda{ where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)}
+
+h4. rake spec:models
+
+Finished in 0.1878 seconds
+17 examples, 0 failures
+
+Looks Green!  Let's bounce back up to cucumber.
+
+h3. rake cucumber:wip
+
+Scenario: Create a new deal                          
+    Given I am on the home page                      
+    Then I should see 4 deals
+
+We need to display the deals on the home page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
