@@ -1,5 +1,5 @@
 
-Create Project
+h1. Create Project
 * rails new deals -m https://raw.github.com/RailsApps/rails3-application-templates/master/rails3-devise-rspec-cucumber-template.rb -T
 * git init .
 * git add *
