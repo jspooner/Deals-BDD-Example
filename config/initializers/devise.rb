@@ -61,8 +61,9 @@ Devise.setup do |config|
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
-  config.stretches = 10
-
+  # config.stretches = 10
+  config.stretches = Rails.env.test? ? 1 : 10 # speed up the test env
+  
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "74766f1fa3703f43983e27470487a0d8863dd17b2c74867b16568f1227d33d5b9d1cf8584b68c2af7224da93b1410ffec39dcba04641c1a1a4e405407230a83d"
 
