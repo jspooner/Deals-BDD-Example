@@ -3,8 +3,9 @@
   <p>User: <%=link_to user.name, user %></p>
 <% end %>
 
+<h3>Deals</h3>
 <% @deals.each do |deal| %>
 	<div class="deal">
-		<%= deal.title %>
+		<%= link_to deal.title, deal %>
 	</div>
 <% end %>
