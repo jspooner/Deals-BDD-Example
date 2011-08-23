@@ -1,3 +1,4 @@
+@wip
 Feature: Create Deals
 	In order to display deals 
 	As an admin
@@ -6,7 +7,8 @@ Feature: Create Deals
 	
 	Background:
 		Given I am a user named "foo" with an email "user@test.com" and password "please"
-	
+		When I sign in as "user@test.com/please"
+		
 	Scenario: Create a new deal
 		Given I am on the new deal page
 		When I fill in "Title" with "Mega skateboard deals"
