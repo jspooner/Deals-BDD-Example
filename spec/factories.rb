@@ -6,3 +6,6 @@ Factory.define :user do |u|
   u.password 'please'
 end
 
+Factory.define :deal do |d|
+  d.title "My Rad Deal"
+end

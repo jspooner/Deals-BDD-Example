@@ -24,12 +24,12 @@ describe DealsController do
   # Deal. As you add validations to Deal, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    Factory.attributes_for(:deal)
   end
 
   describe "GET index" do
     it "assigns all deals as @deals" do
-      deal = Deal.create! valid_attributes
+      deal = Factory(:deal)
       get :index
       assigns(:deals).should eq([deal])
     end
@@ -37,7 +37,7 @@ describe DealsController do
 
   describe "GET show" do
     it "assigns the requested deal as @deal" do
-      deal = Deal.create! valid_attributes
+      deal = Factory(:deal)
       get :show, :id => deal.id.to_s
       assigns(:deal).should eq(deal)
     end
@@ -52,7 +52,7 @@ describe DealsController do
 
   describe "GET edit" do
     it "assigns the requested deal as @deal" do
-      deal = Deal.create! valid_attributes
+      deal = Factory(:deal)
       get :edit, :id => deal.id.to_s
       assigns(:deal).should eq(deal)
     end
@@ -98,7 +98,7 @@ describe DealsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested deal" do
-        deal = Deal.create! valid_attributes
+        deal = Factory(:deal)
         # Assuming there are no other deals in the database, this
         # specifies that the Deal created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -108,13 +108,13 @@ describe DealsController do
       end
 
       it "assigns the requested deal as @deal" do
-        deal = Deal.create! valid_attributes
+        deal = Factory(:deal)
         put :update, :id => deal.id, :deal => valid_attributes
         assigns(:deal).should eq(deal)
       end
 
       it "redirects to the deal" do
-        deal = Deal.create! valid_attributes
+        deal = Factory(:deal)
         put :update, :id => deal.id, :deal => valid_attributes
         response.should redirect_to(deal)
       end
@@ -122,7 +122,7 @@ describe DealsController do
 
     describe "with invalid params" do
       it "assigns the deal as @deal" do
-        deal = Deal.create! valid_attributes
+        deal = Factory(:deal)
         # Trigger the behavior that occurs when invalid params are submitted
         Deal.any_instance.stub(:save).and_return(false)
         put :update, :id => deal.id.to_s, :deal => {}
@@ -130,7 +130,7 @@ describe DealsController do
       end
 
       it "re-renders the 'edit' template" do
-        deal = Deal.create! valid_attributes
+        deal = Factory(:deal)
         # Trigger the behavior that occurs when invalid params are submitted
         Deal.any_instance.stub(:save).and_return(false)
         put :update, :id => deal.id.to_s, :deal => {}
@@ -141,14 +141,14 @@ describe DealsController do
 
   describe "DELETE destroy" do
     it "destroys the requested deal" do
-      deal = Deal.create! valid_attributes
+      deal = Factory(:deal)
       expect {
         delete :destroy, :id => deal.id.to_s
       }.to change(Deal, :count).by(-1)
     end
 
     it "redirects to the deals list" do
-      deal = Deal.create! valid_attributes
+      deal = Factory(:deal)
       delete :destroy, :id => deal.id.to_s
       response.should redirect_to(deals_url)
     end
