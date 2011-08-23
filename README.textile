@@ -197,17 +197,49 @@ h3. rake cucumber
 
 Looks good.  Time to commit and move on to the home_page.feature
 
+h3. Let's implement some step defiitions.
+
+* create /features/step_definitions/home_steps.rb
+* add @wip tag to home_page.feature
+
+h3. rake cucumber:wip
+
+Background:                                           
+    Given there are 4 past 4 current and 2 future deals # features/step_definitions/home_steps.rb:1
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/home_steps.rb:2:in `/^there are (\d+) past (\d+) current and (\d+) future deals$/'
+      features/home/home_page.feature:7:in `Given there are 4 past 4 current and 2 future deals'
 
 
+h3. Implement background step. "Given there are 4 past 4 current and 2 future deals"
+ * variables
+ * FactoryGirl
+
+h3. rake cucumber:wip
+
+Given I am on the home page                         # features/step_definitions/web_steps.rb:44
+    Then I should see 4 deals                           # features/step_definitions/home_steps.rb:13
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/home_steps.rb:14:in `/^I should see (\d+) deals$/'
+      features/home/home_page.feature:11:in `Then I should see 4 deals'
 
 
+h3. Implement step to count deals
 
+Then /^I should see (\d+) deals$/ do |arg1|
+  page.should have_selector("div.deal", :count => arg1)
+end
 
+h3. rake cucumber:wip
 
+Scenario: Create a new deal                           
+    Given I am on the home page                       
+    Then I should see 4 deals                         
+      expected css "div.deal" to return something (RSpec::Expectations::ExpectationNotMetError)
 
+Let's drop down a gear and update the model.
 
-
-
+h4. deal_spec.rb
 
 
 
