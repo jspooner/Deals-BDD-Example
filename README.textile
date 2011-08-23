@@ -38,13 +38,14 @@ h3. rake cucumber:wip
 	  raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
 	    "Now, go and add a mapping in #{__FILE__}"
 	end
+	
 				 
-h3. add route for deals
+h3. Let's make the mapping work for "the new deal page"
 
 	routes.rb
 	resources :deals
 
-h3. rake cucumber:wip
+	and run rake cucumber:wip
 
 	Scenario: Create a new deal                                                         # features/deals/create_deals.feature:12
 	    Given I am on the new deal page                                                   # features/step_definitions/web_steps.rb:44
@@ -53,6 +54,110 @@ h3. rake cucumber:wip
 	      features/deals/create_deals.feature:13:in `Given I am on the new deal page'
 
 
+	p. Now the mapping works and cucumber is driving the next step.  It wants a DealsController!
+
+h3. Generate the DealsController
+
+	Okay let's cheat a little and use a rails generator to speed things up.
+	BDD want's us todo this
+	* rails g controller Deals new
+	* rake cucumber:wip
+	* RED When I fill in "Title" with "Mega skateboard deals" 
+	* Add form to new.html
+	* rake cucumber:wip
+	* RED And I press "Create Deal"
+	* Add DealsController#create
+	
+	This would be the right method with a very custom feature but this one is SUPER basic so we'll skip a few steps and use the scaffold generator.
+	
+	* be rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
+
+	h4. No let's drop a down a gear and take a look at our specs.
+
+	* Add default value for number_sold in 20110823170906_create_deals.rb
+	* Add a spec for our default values.
+
+	/spec/models/deal_spec.rb
+	it { Deal.new.number_sold.should eql(0) }
+  it { Deal.new.quantity.should eql(0) }
+  
+	* rake db:migrate
+	* RAILS_ENV=test rake db:migrate
+	* rake spec
+	
+
+	h4. Look at the deals_controller_spec
+	
+	* Let's use FactoryGirl to make our lives easier later.
+	/spec/factory.rb
+	Factory.define :deal do |d|
+	  d.title 'Mega Skateboard deal'
+	  d.start_date (Date.today-5).to_date
+	  d.end_date (Date.today+5).to_date
+	  d.description 'Mega ramp skateboard by Jake Brown is on sale.'
+	  d.quantity 100
+	  d.number_sold 0
+	end
+	
+	/spec/controllers/deals_controller_spec.rb
+	* "deal = Deal.create! valid_attributes" and replace with "deal = Factory(:deal)"
+	
+	Update valid_attributes to use FactoryGirl
+	
+	def valid_attributes
+    {}
+  end
+	
+	def valid_attributes
+    Factory.attributes_for(:deal)
+  end
+
+	* rake spec - Everything should be green
+	* now back to the BDD cycle
+
+
+h3. rake cucumber:wip
+
+When I fill in "Start date" with "2011/9/1"                                       
+      cannot fill in, no text field, text area or password field with id, name, or label 'Start date' found *(Capybara::ElementNotFound)*
+
+h3. The rails generator by default gives us select boxes but we want a text_field.
+
+We'll update datetime_select with text_field for start_date and end_date.
+
+h3. rake cucumber:wip
+
+
+Then the deal should be saved
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/deal_steps.rb:2:in `/^the deal should be saved$/'
+      features/deals/create_deals.feature:19:in `Then the deal should be saved'
+
+
+h3. Let's implement this step definition
+
+/features/step_definitions/deal_steps.rb
+Then /^the deal should be saved$/ do
+  page.should have_content("Deal was successfully created.")
+end
+
+h3. rake cucumber:wip
+
+Looks Green!                                                                   
+Scenario: Create a new deal
+    Given I am on the new deal page                                             
+    When I fill in "Title" with "Mega skateboard deals"                         
+    When I fill in "Start date" with "2011/9/1"                                 
+    When I fill in "End date" with "2011/9/1"                                   
+    When I fill in "Quantity" with "1000"                                       
+    And I press "Create Deal"                                                   
+    Then the deal should be saved                                               
+    Then I should see "Mega skateboard deals"                                  
+                                                                               
+
+
+
+Then I should see "Title can't be blank" 
 
 
 
@@ -66,9 +171,18 @@ h3. rake cucumber:wip
 
 
 
-* be rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text
-* rake db:migrate
-* RAILS_ENV=test rake db:migrate
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
