@@ -299,10 +299,33 @@ Scenario: Create a new deal
     Given I am on the home page                      
     Then I should see 4 deals
 
-We need to display the deals on the home page
+We need to display the deals on the home page.
+
+h4. Let's use our Deal.current in the home_controller
+
+/spec/controllers/home_controller_spec.rb
+
+it "should set the current deals" do
+  deal = Factory(:deal)
+  get :index
+  assigns(:deals).should eq([deal])
+end
 
 
+h4. rake spec:controllers
 
+1) HomeController GET 'index' should set the current deals
+     Failure/Error: assigns(:deals).should eq([deal])
+
+h4. Edit home_controller.rb
+    @deals = Deal.current
+
+h4. rake spec:controllers
+
+....................
+
+Finished in 0.42225 seconds
+20 examples, 0 failures
 
 
 
