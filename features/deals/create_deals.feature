@@ -12,7 +12,6 @@ Feature: Create Deals
 		Given I am on the new deal page
 		When I fill in "Title" with "Mega skateboard deals"
     When I fill in "Start date" with "2011/9/1"
-    Then I should see a datepicker
 		When I fill in "End date" with "2011/9/1"
 		When I fill in "Quantity" with "1000"
 		And I press "Create Deal"
