@@ -1,4 +1,3 @@
-@wip
 Feature: Home Page
 	In order to sell deals
 	the home page should display open deals.
