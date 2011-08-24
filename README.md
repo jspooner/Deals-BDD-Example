@@ -19,7 +19,7 @@ end
 3\. Generate Scaffolding
 ------------------------
 
-```ruby
+```bash
 $ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
 ```
 
@@ -56,7 +56,7 @@ end
 
 6\. Migrate & Test
 ------------------
-```ruby
+```bash
 $ rake db:migrate
 $ RAILS_ENV=test rake db:migrate
 $ rake spec:models
@@ -90,12 +90,13 @@ deal = Factory(:deal)
 ```
 
 ```bash
-    $ rake spec:controllers
+$ rake spec:controllers
 ```
 
 9\. app/views/deals/_form.html.erb
 ---------------------------------
 
+```html
     <div class="field">
       <%= f.label :start_date %><br />
       <%= f.text_field :start_date %>
@@ -104,55 +105,69 @@ deal = Factory(:deal)
       <%= f.label :end_date %><br />
       <%= f.text_field :end_date %>
     </div>
+```
 
 10\. features/step_definitions/deal_steps.rb
 ------------------------------------------
 
-    Then /^the deal should be saved$/ do
-      page.should have_content("Deal was successfully created.")
-    end
+```ruby
+Then /^the deal should be saved$/ do
+  page.should have_content("Deal was successfully created.")
+end
+```
 
 11\. spec/models/deal_spec.rb
 ---------------------------
 
-    describe "validation" do
-      it { Deal.new.should have(1).errors_on(:title) }    
-    end
+```ruby
+describe "validation" do
+  it { Deal.new.should have(1).errors_on(:title) }    
+end
+```
 
-    $ rake spec:models
+```bash
+$ rake spec:models
+```
 
 12\. app/models/deal.rb
 ---------------------
 
-    validates_presence_of :title
-
-    $ rake spec:models
+```ruby
+validates_presence_of :title
+```
+```bash
+$ rake spec:models
+```
 
 13\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
-    Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |arg1, arg2, arg3|
-      pending # express the regexp above with the code you wish you had
-    end
+```ruby
+Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |arg1, arg2, arg3|
+  pending # express the regexp above with the code you wish you had
+end
 
-    Then /^I should see (\d+) deals$/ do |arg1|
-      pending # express the regexp above with the code you wish you had
-    end
+Then /^I should see (\d+) deals$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+```
 
 14\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
-    Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, current, future|
-      past.to_i.times do
-        Factory(:deal, {:start_date => Date.today-30, :end_date => Date.today-20})
-      end
-      current.to_i.times do
-        Factory(:deal, {:start_date => Date.today-3, :end_date => Date.today+2})
-      end
-      current.to_i.times do
-        Factory(:deal, {:start_date => Date.today+3, :end_date => Date.today+6})
-      end
-    end
+```ruby
+Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, current, future|
+  past.to_i.times do
+    Factory(:deal, {:start_date => Date.today-30, :end_date => Date.today-20})
+  end
+  current.to_i.times do
+    Factory(:deal, {:start_date => Date.today-3, :end_date => Date.today+2})
+  end
+  current.to_i.times do
+    Factory(:deal, {:start_date => Date.today+3, :end_date => Date.today+6})
+  end
+end
+```
 
 15\. features/step_definitions/home_steps.rb
 -------------------------------------------
