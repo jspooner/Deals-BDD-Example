@@ -10,18 +10,21 @@ end
 ```
 
 2\. config/routes.rb
+--------------------
 
 ```ruby
   resources :deals
 ```
 
 3\. Generate Scaffolding
+------------------------
 
 ```ruby
 $ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
 ```
 
 4\. db/migrations/*_create_deals.rb
+-----------------------------------
 
 ```ruby
 class CreateDeals < ActiveRecord::Migration
@@ -42,46 +45,53 @@ end
 5\. spec/models/deal_spec.rb
 ---------------------------
 
-    describe Deal do
-      describe "init" do
-        it { Deal.new.number_sold.should eql(0) }
-        it { Deal.new.quantity.should eql(0) }
-      end
-    end
+```ruby
+describe Deal do
+  describe "init" do
+    it { Deal.new.number_sold.should eql(0) }
+    it { Deal.new.quantity.should eql(0) }
+  end
+end
+```
 
 6\. Migrate & Test
 ------------------
-
-    $ rake db:migrate
-    $ RAILS_ENV=test rake db:migrate
-    $ rake spec:models
+```ruby
+$ rake db:migrate
+$ RAILS_ENV=test rake db:migrate
+$ rake spec:models
+```
 
 7\. FactoryGirl spec/factory.rb
 ------------------------------
-
-    Factory.define :deal do |d|
-      d.title 'Mega Skateboard deal'
-      d.start_date (Date.today-5).to_date
-      d.end_date (Date.today+5).to_date
-      d.description 'Mega ramp skateboard by Jake Brown is on sale.'
-      d.quantity 100
-      d.number_sold 0
-    end
+```ruby
+Factory.define :deal do |d|
+  d.title 'Mega Skateboard deal'
+  d.start_date (Date.today-5).to_date
+  d.end_date (Date.today+5).to_date
+  d.description 'Mega ramp skateboard by Jake Brown is on sale.'
+  d.quantity 100
+  d.number_sold 0
+end
+```
 
 8\. Update Controller Spec spec/controllers/deals_controller_spec.rb
 --------------------------------------------------------------------
 
-    def valid_attributes
-      # {}
-      Factory.attributes_for(:deal)
-    end
+```ruby
+def valid_attributes
+  # {}
+  Factory.attributes_for(:deal)
+end
 
-    # Replace ever Deal.create with Factory(:deal)
-    # deal = Deal.create! valid_attributes
-    deal = Factory(:deal)
+# Replace ever Deal.create with Factory(:deal)
+# deal = Deal.create! valid_attributes
+deal = Factory(:deal)
+```
 
-
+```bash
     $ rake spec:controllers
+```
 
 9\. app/views/deals/_form.html.erb
 ---------------------------------
