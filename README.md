@@ -172,94 +172,115 @@ end
 15\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
-    Then /^I should see (\d+) deals$/ do |arg1|
-      pending # express the regexp above with the code you wish you had
-    end
+```ruby
+Then /^I should see (\d+) deals$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+```
 
 16\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
-    Then /^I should see (\d+) deals$/ do |arg1|
-      page.should have_selector("div.deal", :count => arg1)
-    end
+```ruby
+Then /^I should see (\d+) deals$/ do |arg1|
+  page.should have_selector("div.deal", :count => arg1)
+end
+```
 
 17\. spec/models/deal_spec.rb
 ----------------------------
 
-    describe "queries" do
-      before(:each) do
-        @past    = Factory(:deal, { :start_date => 30.days.ago, :end_date => 29.days.ago })
-        @current = Factory(:deal, { :start_date => 5.days.ago, :end_date => 5.days.from_now })
-        @future  = Factory(:deal, { :start_date => 5.days.from_now, :end_date => 10.days.from_now })
-      end
-      it "should find current deals" do
-        deals = Deal.current
-        deals.should have(1).item
-        deals.first.should eql(@current)
-      end
-    end
-
+```ruby
+describe "queries" do
+  before(:each) do
+    @past    = Factory(:deal, { :start_date => 30.days.ago, :end_date => 29.days.ago })
+    @current = Factory(:deal, { :start_date => 5.days.ago, :end_date => 5.days.from_now })
+    @future  = Factory(:deal, { :start_date => 5.days.from_now, :end_date => 10.days.from_now })
+  end
+  it "should find current deals" do
+    deals = Deal.current
+    deals.should have(1).item
+    deals.first.should eql(@current)
+  end
+end
+```
 
 18\. app/models/deal.rb 
 ----------------------
 
-    scope :current
+```ruby
+scope :current
+```
 
 19\. app/models/deal.rb 
 ----------------------
 
-    scope :current, where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)
+```ruby
+scope :current, where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)
+```
 
 20\. app/models/deal.rb 
 ----------------------
 
-    scope :current, lambda{ where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)}
+```ruby
+scope :current, lambda{ where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)}
+```
 
 21\. spec/controllers/home_controller_spec.rb
 --------------------------------------------
 
-    it "should set the current deals" do
-      deal = Factory(:deal)
-      get :index
-      assigns(:deals).should eq([deal])
-    end
+```ruby
+it "should set the current deals" do
+  deal = Factory(:deal)
+  get :index
+  assigns(:deals).should eq([deal])
+end
+```
 
 22\. app/controllers/home_controller.rb
 --------------------------------------
 
-    @deals = Deal.current
-
+```ruby
+@deals = Deal.current
+```
 
 23\. app/views/home/index.html
 -----------------------------
 
+```html
     <% @deals.each do |deal| %>
      <div class="deal">
       <%= deal.title %>
      </div>
     <% end %>
+```
 
 24\. features/home_page.feature
 ------------------------------
 
+```cucumber
     Then I should see 4 links to deals
-    
+```
+
 25\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
-    Then /^I should see (\d+) links to deals$/ do |arg1|
-      page.should have_selector("div.deal a[href^='/deals/']", :count => arg1)
-    end
-    
+```ruby
+Then /^I should see (\d+) links to deals$/ do |arg1|
+  page.should have_selector("div.deal a[href^='/deals/']", :count => arg1)
+end
+```
+
 26\. app/views/home/index.html
 -----------------------------
 
+```ruby
     <% @deals.each do |deal| %>
      <div class="deal">
        <%= link_to deal.title, deal %>
      </div>
     <% end %>
-
+```
 
 
 
