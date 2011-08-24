@@ -1,3 +1,40 @@
+Set Up
+======
+
+Please use the .rvmrc file or ruby 1.9.2
+
+```bash
+git checkout git@github.com:jspooner/Deals-BDD-Example.git .
+cd Deals-BDD-Example
+```
+
+For Sqlite
+
+```bash
+mv database.yml.template database.yml
+````
+
+```ruby
+gem 'sqlite3'
+# gem 'mysql2'
+```
+
+For MySQL
+
+```bash
+mv mysql_database.yml.template database.yml
+```
+
+Update gem file for sqlite or mysql
+
+```bash
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ RAILS_ENV=test rake db:migrate
+$ rake db:seed
+```
+
 Snippets
 ========
 
