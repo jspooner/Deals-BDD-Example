@@ -2,39 +2,42 @@ Snippets
 ========
 
 1. features/step_definitions/deal_steps.rb
-------------------------------------------
 
-    Then /^the deal should be saved$/ do
-      pending # express the regexp above with the code you wish you had
-    end
+```ruby
+Then /^the deal should be saved$/ do
+  pending # express the regexp above with the code you wish you had
+end
+```
 
 2. config/routes.rb
--------------------
 
-    resources :deals
+```ruby
+  resources :deals
+```
 
 3. Generate Scaffolding
------------------------
 
-    $ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
+```ruby
+$ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
+```
 
 4. db/migrations/*_create_deals.rb
-----------------------------------
 
-    class CreateDeals < ActiveRecord::Migration
-      def change
-        create_table :deals do |t|
-          t.string :title
-          t.datetime :start_date
-          t.datetime :end_date
-          t.text :description
-          t.integer :quantity, :default => 0
-          t.integer :number_sold, :default => 0
-          t.timestamps
-        end
-      end
+```ruby
+class CreateDeals < ActiveRecord::Migration
+  def change
+    create_table :deals do |t|
+      t.string :title
+      t.datetime :start_date
+      t.datetime :end_date
+      t.text :description
+      t.integer :quantity, :default => 0
+      t.integer :number_sold, :default => 0
+      t.timestamps
     end
-
+  end
+end
+```
 
 4. spec/models/deal_spec.rb
 ---------------------------
