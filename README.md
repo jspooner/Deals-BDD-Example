@@ -231,3 +231,11 @@ Snippets
        <%= link_to deal.title, deal %>
      </div>
     <% end %>
+
+
+
+
+
+
+
+
