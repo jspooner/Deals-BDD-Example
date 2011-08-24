@@ -1,27 +1,27 @@
 Snippets
 ========
 
-1. features/step_definitions/deal_steps.rb
-
+1\. features/step_definitions/deal_steps.rb
+------------------------------------------
 ```ruby
 Then /^the deal should be saved$/ do
   pending # express the regexp above with the code you wish you had
 end
 ```
 
-2. config/routes.rb
+2\. config/routes.rb
 
 ```ruby
   resources :deals
 ```
 
-3. Generate Scaffolding
+3\. Generate Scaffolding
 
 ```ruby
 $ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
 ```
 
-4. db/migrations/*_create_deals.rb
+4\. db/migrations/*_create_deals.rb
 
 ```ruby
 class CreateDeals < ActiveRecord::Migration
@@ -39,7 +39,7 @@ class CreateDeals < ActiveRecord::Migration
 end
 ```
 
-4. spec/models/deal_spec.rb
+5\. spec/models/deal_spec.rb
 ---------------------------
 
     describe Deal do
@@ -49,14 +49,14 @@ end
       end
     end
 
-4. Migrate & Test
+6\. Migrate & Test
 ------------------
 
     $ rake db:migrate
     $ RAILS_ENV=test rake db:migrate
     $ rake spec:models
 
-5. FactoryGirl spec/factory.rb
+7\. FactoryGirl spec/factory.rb
 ------------------------------
 
     Factory.define :deal do |d|
@@ -68,7 +68,7 @@ end
       d.number_sold 0
     end
 
-5. Update Controller Spec spec/controllers/deals_controller_spec.rb
+8\. Update Controller Spec spec/controllers/deals_controller_spec.rb
 --------------------------------------------------------------------
 
     def valid_attributes
@@ -83,7 +83,7 @@ end
 
     $ rake spec:controllers
 
-6. app/views/deals/_form.html.erb
+9\. app/views/deals/_form.html.erb
 ---------------------------------
 
     <div class="field">
@@ -95,14 +95,14 @@ end
       <%= f.text_field :end_date %>
     </div>
 
-7. features/step_definitions/deal_steps.rb
+10\. features/step_definitions/deal_steps.rb
 ------------------------------------------
 
     Then /^the deal should be saved$/ do
       page.should have_content("Deal was successfully created.")
     end
 
-8. spec/models/deal_spec.rb
+11\. spec/models/deal_spec.rb
 ---------------------------
 
     describe "validation" do
@@ -111,14 +111,14 @@ end
 
     $ rake spec:models
 
-9. app/models/deal.rb
+12\. app/models/deal.rb
 ---------------------
 
     validates_presence_of :title
 
     $ rake spec:models
 
-10. features/step_definitions/home_steps.rb
+13\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
     Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |arg1, arg2, arg3|
@@ -129,7 +129,7 @@ end
       pending # express the regexp above with the code you wish you had
     end
 
-11. features/step_definitions/home_steps.rb
+14\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
     Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, current, future|
@@ -144,21 +144,21 @@ end
       end
     end
 
-12. features/step_definitions/home_steps.rb
+15\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
     Then /^I should see (\d+) deals$/ do |arg1|
       pending # express the regexp above with the code you wish you had
     end
 
-13. features/step_definitions/home_steps.rb
+16\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
     Then /^I should see (\d+) deals$/ do |arg1|
       page.should have_selector("div.deal", :count => arg1)
     end
 
-14. spec/models/deal_spec.rb
+17\. spec/models/deal_spec.rb
 ----------------------------
 
     describe "queries" do
@@ -175,22 +175,22 @@ end
     end
 
 
-15. app/models/deal.rb 
+18\. app/models/deal.rb 
 ----------------------
 
     scope :current
 
-16. app/models/deal.rb 
+19\. app/models/deal.rb 
 ----------------------
 
     scope :current, where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)
 
-17. app/models/deal.rb 
+20\. app/models/deal.rb 
 ----------------------
 
     scope :current, lambda{ where("Date(start_date) <= ? AND Date(end_date) >= ?", Date.today.to_date, Date.today.to_date)}
 
-18. spec/controllers/home_controller_spec.rb
+21\. spec/controllers/home_controller_spec.rb
 --------------------------------------------
 
     it "should set the current deals" do
@@ -199,13 +199,13 @@ end
       assigns(:deals).should eq([deal])
     end
 
-19. app/controllers/home_controller.rb
+22\. app/controllers/home_controller.rb
 --------------------------------------
 
     @deals = Deal.current
 
 
-20. app/views/home/index.html
+23\. app/views/home/index.html
 -----------------------------
 
     <% @deals.each do |deal| %>
@@ -214,19 +214,19 @@ end
      </div>
     <% end %>
 
-21. features/home_page.feature
+24\. features/home_page.feature
 ------------------------------
 
     Then I should see 4 links to deals
     
-22. features/step_definitions/home_steps.rb
+25\. features/step_definitions/home_steps.rb
 -------------------------------------------
 
     Then /^I should see (\d+) links to deals$/ do |arg1|
       page.should have_selector("div.deal a[href^='/deals/']", :count => arg1)
     end
     
-23. app/views/home/index.html
+26\. app/views/home/index.html
 -----------------------------
 
     <% @deals.each do |deal| %>
