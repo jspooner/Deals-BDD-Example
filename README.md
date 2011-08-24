@@ -4,14 +4,14 @@ Set Up
 Please use the .rvmrc file or ruby 1.9.2
 
 ```bash
-git checkout git@github.com:jspooner/Deals-BDD-Example.git .
+git checkout git://github.com/jspooner/Deals-BDD-Example.git .
 cd Deals-BDD-Example
 ```
 
 For Sqlite
 
 ```bash
-mv database.yml.template database.yml
+mv config/database.yml.template config/database.yml
 ````
 
 ```ruby
@@ -22,17 +22,20 @@ gem 'sqlite3'
 For MySQL
 
 ```bash
-mv mysql_database.yml.template database.yml
+mv config/mysql_database.yml.template config/database.yml
 ```
 
 Update gem file for sqlite or mysql
 
 ```bash
+$ gem install bundle
 $ bundle install
 $ rake db:create
 $ rake db:migrate
 $ RAILS_ENV=test rake db:migrate
 $ rake db:seed
+$ rake spec
+$ rake cucumber
 ```
 
 Snippets
@@ -40,6 +43,10 @@ Snippets
 
 1\. features/step_definitions/deal_steps.rb
 ------------------------------------------
+```bash
+touch features/step_definitions/deal_steps.rb
+```
+
 ```ruby
 Then /^the deal should be saved$/ do
   pending # express the regexp above with the code you wish you had
@@ -57,7 +64,7 @@ end
 ------------------------
 
 ```bash
-$ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
+bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
 ```
 
 4\. db/migrations/*_create_deals.rb
@@ -99,7 +106,7 @@ $ RAILS_ENV=test rake db:migrate
 $ rake spec:models
 ```
 
-7\. FactoryGirl spec/factory.rb
+7\. FactoryGirl spec/factories.rb
 ------------------------------
 ```ruby
 Factory.define :deal do |d|
@@ -176,8 +183,25 @@ validates_presence_of :title
 $ rake spec:models
 ```
 
+Remove @wip
+
+```bash
+$ rake cucumber
+$ rake spec
+```
+
+
+Part II Home Page
+=================
+
+
+
 13\. features/step_definitions/home_steps.rb
 -------------------------------------------
+
+```bash
+mate features/step_definitions/home_steps.rb
+````
 
 ```ruby
 Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |arg1, arg2, arg3|
@@ -203,15 +227,6 @@ Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, cu
   current.to_i.times do
     Factory(:deal, {:start_date => Date.today+3, :end_date => Date.today+6})
   end
-end
-```
-
-15\. features/step_definitions/home_steps.rb
--------------------------------------------
-
-```ruby
-Then /^I should see (\d+) deals$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
 end
 ```
 
