@@ -6,6 +6,7 @@ Feature: Home Page
 	Background:
 		Given there are 4 past 4 current and 2 future deals
 	
+	@javascript
 	Scenario: Create a new deal
 		Given I am on the home page
 		Then I should see 4 links to deals

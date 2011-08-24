@@ -2,8 +2,20 @@ p. Project was generated from rails3-devise-rspec-cucumber-template with some mo
 rails new deals -m https://raw.github.com/RailsApps/rails3-application-templates/master/rails3-devise-rspec-cucumber-template.rb -T
 
 
-h1. Create Project
-	* or check out tag v0.2.1
+h1. Clone Project
+
+git clone	git@github.com:jspooner/Deals-BDD-Example.git
+switch to tag
+
+
+update database.yml.template
+update gem file for sqlite or mysql
+
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ RAILS_ENV=test rake db:migrate
+$ rake db:seed
 
 h3. rake cucumber:wip
 	2 scenarios (2 failed)
@@ -17,7 +29,9 @@ h3. rake cucumber:wip
 	end
 
 h3. Implement Step Definitions
-	/features/step_definitions/deal_steps.rb
+
+$ touch	/features/step_definitions/deal_steps.rb
+
 	Then /^the deal should be saved$/ do
 	  pending # express the regexp above with the code you wish you had
 	end
@@ -78,8 +92,15 @@ h3. Generate the DealsController
 	* Add a spec for our default values.
 
 	/spec/models/deal_spec.rb
-	it { Deal.new.number_sold.should eql(0) }
-  it { Deal.new.quantity.should eql(0) }
+  describe "init" do
+    it { Deal.new.number_sold.should eql(0) }
+    it { Deal.new.quantity.should eql(0) }
+  end
+    
+  then add default values to 20110823170906_create_deals.rb
+  t.integer :quantity, :default => 0
+  t.integer :number_sold, :default => 0
+  
   
 	* rake db:migrate
 	* RAILS_ENV=test rake db:migrate
@@ -87,8 +108,12 @@ h3. Generate the DealsController
 	
 
 	h4. Look at the deals_controller_spec
+
+	* rake spec:controllers
+	  
+	* Let's use FactoryGirl to make our lives easier later. 
+	* Why FactoryGirl?
 	
-	* Let's use FactoryGirl to make our lives easier later.
 	/spec/factory.rb
 	Factory.define :deal do |d|
 	  d.title 'Mega Skateboard deal'
@@ -114,7 +139,7 @@ h3. Generate the DealsController
 
 	* rake spec - Everything should be green
 	* now back to the BDD cycle
-
+  * rake spec:controllers
 
 h3. rake cucumber:wip
 
@@ -161,7 +186,7 @@ Then I should see "Title can't be blank"
 
 Looks like this should be valid so let's drop down a gear and update the Deal model.
 
-h4. DealSpec
+h4. specs/models/deal_spec.rb
 
 describe "validation" do
   it { Deal.new.should have(1).errors_on(:title) }    
@@ -197,7 +222,17 @@ h3. rake cucumber
 
 Looks good.  Time to commit and move on to the home_page.feature
 
-h3. Let's implement some step defiitions.
+* Move @wip from completed steps.
+* add @wip to home_steps.rb
+
+
+
+
+h1. HOME PAGE
+
+h3. rake cucumber:wip
+
+h3. Let's implement some step definitions.
 
 * create /features/step_definitions/home_steps.rb
 * add @wip tag to home_page.feature
@@ -215,10 +250,26 @@ h3. Implement background step. "Given there are 4 past 4 current and 2 future de
  * variables
  * FactoryGirl
 
+$ touch features/step_definitions/home_steps.rb
+* past these steps
+
+  Given /^there are (\d+) past (\d+) current and (\d+) future deals$/ do |past, current, future|
+  past.to_i.times do
+    Factory(:deal, {:start_date => Date.today-30, :end_date => Date.today-20})
+  end
+  current.to_i.times do
+    Factory(:deal, {:start_date => Date.today-3, :end_date => Date.today+2})
+  end
+  current.to_i.times do
+    Factory(:deal, {:start_date => Date.today+3, :end_date => Date.today+6})
+    end
+  end
+
+
 h3. rake cucumber:wip
 
-Given I am on the home page                         # features/step_definitions/web_steps.rb:44
-    Then I should see 4 deals                           # features/step_definitions/home_steps.rb:13
+Given I am on the home page
+    Then I should see 4 deals
       TODO (Cucumber::Pending)
       ./features/step_definitions/home_steps.rb:14:in `/^I should see (\d+) deals$/'
       features/home/home_page.feature:11:in `Then I should see 4 deals'
@@ -239,7 +290,7 @@ Scenario: Create a new deal
 
 Let's drop down a gear and update the model.
 
-h4. deal_spec.rb
+h4. spec/models/deal_spec.rb
 
 Add named scope for current deals.
 
@@ -263,7 +314,7 @@ Failure/Error: deals = Deal.current
      NoMethodError:
        undefined method `current' for #<Class:0x007fbade4e2ac8>
 
-Let's add this to Deal.rb 
+Let's add this to app/models/deal.rb 
 scope :current
 
 h4. rake spec:models
@@ -299,7 +350,7 @@ Scenario: Create a new deal
     Given I am on the home page                      
     Then I should see 4 deals
 
-We need to display the deals on the home page.
+!We need to display the deals on the home page.
 
 h4. Let's use our Deal.current in the home_controller
 
@@ -327,7 +378,11 @@ h4. rake spec:controllers
 Finished in 0.42225 seconds
 20 examples, 0 failures
 
+h4. rake cucumber:wip
+
 h4. Let's add some html
+
+open app/views/home/index.html
 
 <% @deals.each do |deal| %>
  <div class="deal">
@@ -341,6 +396,9 @@ and pop back up to cucumber
 h3. rake cucumber:wip
 
 Looks Green!  Almost!
+
+
+
 
 h3. The customer actually wants the deals to be linked to the deal page.
 
@@ -357,6 +415,13 @@ Then I should see 4 links to deals                  # features/step_definitions/
 
 
 h3. Let's add the links
+
+<h1>Deals</h1>
+<% @deals.each do |deal| %>
+ <div class="deal">
+ 	<%= link_to deal.title, deal %>
+ </div>
+<% end %>
 
 h3. rake cucumber:wip
 
