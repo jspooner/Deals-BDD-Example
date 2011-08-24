@@ -18,7 +18,7 @@ Snippets
 
     $ bundle exec rails g scaffold deals title:string start_date:datetime end_date:datetime quantity:integer description:text number_sold:integer
 
-3. db/migrations/*_create_deals.rb
+4. db/migrations/*_create_deals.rb
 ----------------------------------
 
     class CreateDeals < ActiveRecord::Migration
@@ -46,7 +46,7 @@ Snippets
       end
     end
 
-4a. Migrate & Test
+4. Migrate & Test
 ------------------
 
     $ rake db:migrate
@@ -65,7 +65,7 @@ Snippets
       d.number_sold 0
     end
 
-5a. Update Controller Spec spec/controllers/deals_controller_spec.rb
+5. Update Controller Spec spec/controllers/deals_controller_spec.rb
 --------------------------------------------------------------------
 
     def valid_attributes
