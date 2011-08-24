@@ -1,6 +1,8 @@
 Set Up
 ======
 
+Please use the .rvmrc file or ruby 1.9.2
+
 ```bash
 git checkout git@github.com:jspooner/Deals-BDD-Example.git .
 cd Deals-BDD-Example
