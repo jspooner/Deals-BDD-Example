@@ -30,7 +30,6 @@ Snippets
           t.text :description
           t.integer :quantity, :default => 0
           t.integer :number_sold, :default => 0
-
           t.timestamps
         end
       end
