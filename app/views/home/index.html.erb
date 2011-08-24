@@ -2,3 +2,10 @@
 <% @users.each do |user| %>
   <p>User: <%=link_to user.name, user %></p>
 <% end %>
+
+<h3>Deals</h3>
+<% @deals.each do |deal| %>
+  <div class="deal">
+    <%= link_to deal.title, deal %>
+  </div>
+<% end %>

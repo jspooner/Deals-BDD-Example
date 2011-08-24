@@ -1,4 +1,3 @@
-@wip
 Feature: Create Deals
 	In order to display deals 
 	As an admin

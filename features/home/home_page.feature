@@ -7,5 +7,5 @@ Feature: Home Page
 
 	Scenario: Create a new deal
 		Given I am on the home page
-		Then I should see 4 deals
+		Then I should see 4 links to deals
 		
